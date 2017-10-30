@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 	<head>
-		<title>textReplacer</title>
+		<title>textExpander</title>
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
@@ -12,7 +12,7 @@
 		<nav class="navbar navbar-inverse">
 			<div class="container-fluid">
 				<div class="navbar-header">
-					<a class="navbar-brand" href="#">textReplacer</a>
+					<a class="navbar-brand" href="#">textExpander</a>
 				</div>
 				<div class="nav navbar-nav navbar-right" style="margin-right: 0px;">
 					<button type="button" class="btn btn-primary navbar-btn" data-toggle="modal" data-target="#configModal" onclick="saveConfig();"><span class="glyphicon glyphicon-pencil"></span> Edit Config</button>
@@ -81,16 +81,26 @@ $$$ and again
 								</div> <!-- row --> 
 							</div> <!-- form-group -->
 						</div> <!-- col -->
+					</div> <!-- row -->
+					<hr>
+					<div class="row">
 						<div class="col-sm-12">
-							<div class="row"><div class="col-sm-6"><h3>Output</h3></div> <!-- col --> 
-							<div class="col-sm-6"><div class="pull-right">
-							<button class="btn btn-primary navbar-btn" onclick="copy_to_clipboard('outputText');"><span class="glyphicon glyphicon-copy"></span> Copy to Clipboard</button>
-							<button class="btn btn-primary navbar-btn" onclick="downloadOutput();"><span class="glyphicon glyphicon-save-file"></span> Download</button>
-						</div> <!-- pull-right --> 
-							</div> <!-- col --> 
-							<div class="col-sm-12">
-							<textarea class="form-control" rows="20" id="outputText" readonly></textarea>
-							</div> <!-- col --> 
+							<div class="row">
+								<div class="col-sm-6">
+									<h3>Output</h3>
+								</div> <!-- col --> 
+								<div class="col-sm-6">
+									<div class="pull-right">
+										<button class="btn btn-primary" onclick="copy_to_clipboard('outputText');"><span class="glyphicon glyphicon-copy"></span> Clipboard</button>
+										<button class="btn btn-primary" onclick="downloadOutput();"><span class="glyphicon glyphicon-save-file"></span> Download</button>
+										<button class="btn btn-danger" onclick="document.getElementById('outputText').value='';"><span class="glyphicon glyphicon-remove"></span> Clear</button>
+									</div> <!-- pull-right --> 
+								</div> <!-- col --> 
+							</div> <!-- row --> 
+							<div class="row">
+								<div class="col-sm-12">
+									<textarea class="form-control" rows="20" id="outputText" readonly></textarea>
+								</div> <!-- col --> 
 							</div> <!-- row --> 
 						</div> <!-- col-12 -->
 					</div> <!-- row -->
@@ -128,7 +138,7 @@ $$$ and again
 						<li>The <kbd>template</kbd> field defines the format of the output text.</li>
 						<li>Each occurenace ot the magic <kbd>token</kbd> field in the <kbd>template</kbd> will be replaced.</li>
 						<li>The magic <kbd>token</kbd>, e.g. <code>$$$</code> will be replaced with lines from the input field.</li>
-						<li>Please not the <kbd>token</kbd> must match using Javascript regEx.</li>
+						<li>Please note the <kbd>token</kbd> must match using Javascript regEx.</li>
 					</ul>
 					<h3>Options</h3>
 					<ul>
@@ -219,7 +229,7 @@ $$$ and again
 					if (outputText !== '') {
 						outputText += document.getElementById('separatorText').value;
 					}
-					outputText += replaceText.replace(re, replace) + "\n";
+					outputText += replaceText.replace(re, replace);
 				}
 			}
 			outputText = document.getElementById('headerText').value + outputText + document.getElementById('footerText').value;

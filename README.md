@@ -1,6 +1,10 @@
 # textExpander
 Expand a text list to CLI, SQL, inserts, etc. all from a single HTML+Javascript file!
 
+## Requirements
+- Javascript-enabled browser
+- access to [Bootstrap](http://getbootstrap.com/)
+
 ## Features:
 
 ### Input
@@ -18,7 +22,7 @@ Expand a text list to CLI, SQL, inserts, etc. all from a single HTML+Javascript 
 - The template field defines the format of the output text.
 - Each occurenace ot the magic token field in the template will be replaced.
 - The magic token, e.g. `$$$` will be replaced with lines from the input field.
-- Please not the token must match using Javascript regEx.
+- Please note the token must match using Javascript regEx.
 
 ### Options
 
