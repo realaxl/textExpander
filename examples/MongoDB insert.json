@@ -1,0 +1,9 @@
+{
+	"inputText": "a\nb\nc\n",
+	"replaceText": "{\n\t\"collectionId\" : \"$$$\",\n\t\"collectionOptions\" : [\n\t\t{\n\t\t\t\"properties\" : {\t\t\t\t\n\t\t\t},\n\t\t\t\"collectionText\" : \"$$$\",\n\t\t\t\"collectionProps\" : [ ]\n\t\t}\n\t],\n}",
+	"replaceMagic": "\\$\\$\\$",
+	"outputText": "",
+	"headerText": "db.myCollection.insert([\n",
+	"separatorText": ",\n",
+	"footerText": "])"
+}

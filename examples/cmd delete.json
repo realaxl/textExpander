@@ -1,0 +1,9 @@
+{
+	"inputText": "a\nb\nc\ne\nf\ng\n",
+	"replaceText": "if exist $$$ delete $$$\n",
+	"replaceMagic": "\\$\\$\\$",
+	"outputText": "",
+	"headerText": "rem delete ... if exist for Windows cmd\n",
+	"separatorText": "",
+	"footerText": "echo Done"
+}
