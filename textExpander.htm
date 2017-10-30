@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<title>textReplacer</title>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	</head>
+	<body>
+		<nav class="navbar navbar-inverse">
+			<div class="container-fluid">
+				<div class="navbar-header">
+					<a class="navbar-brand" href="#">textReplacer</a>
+				</div>
+				<div class="nav navbar-nav navbar-right" style="margin-right: 0px;">
+					<button type="button" class="btn btn-primary navbar-btn" data-toggle="modal" data-target="#configModal" onclick="saveConfig();"><span class="glyphicon glyphicon-pencil"></span> Edit Config</button>
+					<button type="button" class="btn btn-danger navbar-btn" data-toggle="modal" data-target="#clearFieldsModal"><span class="glyphicon glyphicon-remove"></span> Clear fields</button>
+				</div>
+			</div>
+		</nav>
+		<div class="container-fluid">
+			<ul class="nav nav-tabs">
+				<li class="active"><a data-toggle="tab" href="#tabHome">Home</a></li>
+				<li><a data-toggle="tab" href="#tabOptions">Options</a></li>
+				<li><a data-toggle="tab" href="#tabHelp">Help</a></li>
+			</ul>
+			<div class="tab-content">
+				<div id="tabHome" class="tab-pane fade in active">
+					<div class="row">
+						<div class="col-sm-6">
+							<h3>Input</h3>
+							<div class="form-group">
+								<textarea class="form-control" rows="10" id="inputText">line 1
+line 2
+line 3</textarea>
+							</div> <!-- form-group -->
+							<div class="form-group">
+								<div class="row">
+									<div class="col-sm-8">
+										<div class="input-group">
+											<span class="input-group-addon"><i class="glyphicon glyphicon-filter"></i> Filter</span>
+											<input id="inputFilter" type="text" class="form-control" name="email" placeholder="replacePattern" value=".*">
+										</div> <!-- input-group --> 
+									</div> <!-- col --> 
+									<div class="col-sm-4">
+										<button class="btn btn-block" onclick="document.getElementById('inputFilter').value='.*'">.*</button>
+									</div> <!-- col --> 
+								</div> <!-- row --> 
+							</div> <!-- form-group -->
+							<div class="checkbox active pull-right">
+								<label><input type="checkbox" class="" value="" checked>Skip empty lines</label>
+							</div> <!-- checkbox --> 
+						</div> <!-- col --> 
+						<div class="col-sm-6">
+							<h3>Template</h3>
+							<div class="form-group">
+								<textarea class="form-control" rows="10" id="replaceText">replace $$$ as often as you want to ...
+$$$ again
+$$$ and again
+								</textarea>
+							</div> <!-- form-group --> 
+							<div class="form-group">
+								<div class="row">
+									<div class="col-sm-8">
+										<div class="input-group">
+											<span class="input-group-addon"><i class="glyphicon glyphicon-flash"></i> Token</span>
+											<input id="replaceMagic" type="text" class="form-control" name="email" placeholder="replacePattern" value="\$\$\$">
+										</div> <!-- input-group --> 
+									</div> <!-- col --> 
+									<div class="col-sm-4">
+										<button class="btn btn-block" onclick="document.getElementById('replaceMagic').value='\\\$\\\$\\\$'">$$$</button>
+									</div> <!-- col --> 
+								</div> <!-- row --> 
+								<div class="row">
+									<div class="col-sm-12">
+										<br/>
+										<button class="btn btn-success btn-block" onclick="splitAndReplace()">Split and Replace</button>
+									</div> <!-- col --> 
+								</div> <!-- row --> 
+							</div> <!-- form-group -->
+						</div> <!-- col -->
+						<div class="col-sm-12">
+							<div class="row"><div class="col-sm-6"><h3>Output</h3></div> <!-- col --> 
+							<div class="col-sm-6"><div class="pull-right">
+							<button class="btn btn-primary navbar-btn" onclick="copy_to_clipboard('outputText');"><span class="glyphicon glyphicon-copy"></span> Copy to Clipboard</button>
+							<button class="btn btn-primary navbar-btn" onclick="downloadOutput();"><span class="glyphicon glyphicon-save-file"></span> Download</button>
+						</div> <!-- pull-right --> 
+							</div> <!-- col --> 
+							<div class="col-sm-12">
+							<textarea class="form-control" rows="20" id="outputText" readonly></textarea>
+							</div> <!-- col --> 
+							</div> <!-- row --> 
+						</div> <!-- col-12 -->
+					</div> <!-- row -->
+				</div> <!-- tab-pane --> 
+				<div id="tabOptions" class="tab-pane fade">
+					<h3>Options</h3>
+					<div class="well">
+						<div class="form-group">
+							<label for="headerText">Header:</label>
+							<textarea class="form-control" rows="3" id="headerText"></textarea>
+						</div> 
+						<div class="form-group">
+							<label for="separatorText">Separator:</label>
+							<textarea class="form-control" rows="3" id="separatorText"></textarea>
+						</div> 
+						<div class="form-group">
+							<label for="footerText">Footer:</label>
+							<textarea class="form-control" rows="3" id="footerText"></textarea>
+						</div> 
+					</div> <!-- well -->
+				</div> <!-- tab-pane -->
+				<div id="tabHelp" class="tab-pane fade">
+					<h3>Input</h3>
+					<ul>
+						<li>The content of the <kbd>input</kbd> field will be separated into lines, splitting by <code>\n</code> character.</li>
+						<li>Each line from <kbd>input</kbd> field will be processed individually with the rules below.</li>
+					</ul>
+					<h3>Filters</h3>
+					<ul>
+						<li>Blank lines in the <kbd>input</kbd> field will be skipped and will not appear in <kbd>output</kbd> field.</li>
+						<li>Lines in the <kbd>input</kbd> field can be filtered against the regEx <kbd>filter</kbd> field.</li>
+					</ul>
+					<h3>Template and Token</h3>
+					<ul>
+						<li>The <kbd>template</kbd> field defines the format of the output text.</li>
+						<li>Each occurenace ot the magic <kbd>token</kbd> field in the <kbd>template</kbd> will be replaced.</li>
+						<li>The magic <kbd>token</kbd>, e.g. <code>$$$</code> will be replaced with lines from the input field.</li>
+						<li>Please not the <kbd>token</kbd> must match using Javascript regEx.</li>
+					</ul>
+					<h3>Options</h3>
+					<ul>
+						<li><kbd>Header</kbd>, <kbd>Separator</kbd> and <kbd>Footer</kbd> will be added to the output before, inbetween and after the templates.</li>
+						<ul>
+							<li><kbd>Header</kbd></li>
+							<li>Template</li>
+							<li><kbd>Separator</kbd></li>
+							<li>Template</li>
+							<li><kbd>Separator</kbd></li>
+							<li>[...]</li>
+							<li><kbd>Footer</kbd></li>
+						</ul>
+					</ul>
+				</div> <!-- tab-pane -->
+			</div> <!-- tab-content --> 
+		</div> <!-- container -->
+
+
+		
+		<!-- Modal -->
+		<div id="clearFieldsModal" class="modal fade" role="dialog">
+			<div class="modal-dialog">
+				<!-- Modal content-->
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal">&times;</button>
+						<h4 class="modal-title">Confirm clearing all fields</h4>
+					</div>
+					<div class="modal-body">
+						<button class="btn btn-danger btn-lg btn-block" onclick="clearFields()">Clear fields</button>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+					</div>
+				</div>
+			</div>
+		</div> <!-- modal fade -->
+
+
+		<!-- Modal -->
+		<div id="configModal" class="modal fade" role="dialog">
+			<div class="modal-dialog">
+				<!-- Modal content-->
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal">&times;</button>
+						<h4 class="modal-title">Edit Config</h4>
+					</div>
+					<div class="modal-body">
+						<div class="form-group">
+							<textarea class="form-control" rows="10" id="configEditorText"></textarea>
+						</div> 					
+						<button class="btn btn-primary" onclick="copy_to_clipboard('configEditorText');"><span class="glyphicon glyphicon-copy"></span> Copy Config to Clipboard</button>
+						<button class="btn btn-warning pull-right" onclick="loadConfig()"><span class="glyphicon glyphicon-save"></span> Update and overwrite config fields</button>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+					</div>
+				</div>
+			</div>
+		</div> <!-- modal fade -->
+
+	</body>
+	<script type='text/javascript'>
+		function clearFields() {
+			// clear textareas
+			let textareas = ['inputText', 'replaceText', 'replaceMagic', 'outputText', 'headerText', 'separatorText', 'footerText'];
+			for (let i = 0; i < textareas.length; i++) {
+				document.getElementById(textareas[i]).value = '';
+			}
+		}
+		
+		function splitAndReplace() {
+			var arrayOfLines = $('#inputText').val().split('\n');
+			var outputText = '';
+		
+			var replaceText = document.getElementById('replaceText').value;
+			var replaceMagic = document.getElementById('replaceMagic').value;
+			var re = new RegExp(replaceMagic, 'g');
+		
+			var inputFilter = document.getElementById('inputFilter').value;
+			var inputRe = new RegExp(inputFilter, 'g');
+		
+			for (let i = 0; i < arrayOfLines.length; i++) {
+				let replace = arrayOfLines[i];
+				if ((replace != "") && replace.match(inputRe)) {
+					if (outputText !== '') {
+						outputText += document.getElementById('separatorText').value;
+					}
+					outputText += replaceText.replace(re, replace) + "\n";
+				}
+			}
+			outputText = document.getElementById('headerText').value + outputText + document.getElementById('footerText').value;
+
+			document.getElementById('outputText').value = outputText;		
+		}
+		
+		function copy_to_clipboard(id) {
+			document.getElementById(id).select();
+			document.execCommand('copy');
+		}
+
+		function downloadOutput() {
+			var s = document.getElementById('outputText').value;
+			function dataUrl(data) {return "data:x-application/text," + escape(data);}
+				window.open(dataUrl(s));
+		}
+
+		function saveConfig() {
+			let textareas = ['inputText', 'replaceText', 'replaceMagic', 'outputText', 'headerText', 'separatorText', 'footerText'];
+			var config = {};
+
+			for (let i = 0; i < textareas.length; i++) {
+				config[textareas[i]] = document.getElementById(textareas[i]).value;
+			}
+
+			document.getElementById('configEditorText').value = JSON.stringify(config, null, "\t");
+		}
+
+		function loadConfig() {
+			let textareas = ['inputText', 'replaceText', 'replaceMagic', 'outputText', 'headerText', 'separatorText', 'footerText'];
+			var config = JSON.parse(document.getElementById('configEditorText').value);
+
+			for (let i = 0; i < textareas.length; i++) {
+				let textarea = textareas[i];
+				document.getElementById(textarea).value = (config[textarea]) ? config[textarea] : '';
+			}
+
+			document.getElementById('configEditorText').value = JSON.stringify(config, null, "\t");
+		}
+	</script>
+</html>
