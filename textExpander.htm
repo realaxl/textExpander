@@ -9,23 +9,25 @@
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 	</head>
 	<body>
-		<nav class="navbar navbar-inverse">
+			<div style="background: #f0f1f2;">
+		<nav class="navbar navbar-inverse" style="border-radius:0; background:#222;">
 			<div class="container-fluid">
 				<div class="navbar-header">
 					<a class="navbar-brand" href="#">textExpander</a>
 				</div>
 				<div class="nav navbar-nav navbar-right" style="margin-right: 0px;">
-					<button type="button" class="btn btn-primary navbar-btn" data-toggle="modal" data-target="#configModal" onclick="saveConfig();"><span class="glyphicon glyphicon-pencil"></span> Edit Config</button>
-					<button type="button" class="btn btn-danger navbar-btn" data-toggle="modal" data-target="#clearFieldsModal"><span class="glyphicon glyphicon-remove"></span> Clear fields</button>
+					<button type="button" class="btn btn-primary navbar-btn" data-toggle="modal" data-target="#configModal" onclick="saveConfig();"><span class="glyphicon glyphicon-pencil"></span> Edit config</button>
+					<button type="button" class="btn btn-danger navbar-btn" data-toggle="modal" data-target="#clearFieldsModal"><span class="glyphicon glyphicon-remove"></span> Clear all</button>
 				</div>
-			</div>
-		</nav>
-		<div class="container-fluid">
-			<ul class="nav nav-tabs">
+			</div> <!-- container --> 
+		</nav> <!-- navbar --> 
+			<ul class="nav nav-tabs" style="padding-left:16px;">
 				<li class="active"><a data-toggle="tab" href="#tabHome">Home</a></li>
 				<li><a data-toggle="tab" href="#tabOptions">Options</a></li>
 				<li><a data-toggle="tab" href="#tabHelp">Help</a></li>
 			</ul>
+	</div>
+		<div class="container-fluid">
 			<div class="tab-content">
 				<div id="tabHome" class="tab-pane fade in active">
 					<div class="row">
