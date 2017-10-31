@@ -41,7 +41,7 @@ line 3</textarea>
 									<div class="col-sm-8">
 										<div class="input-group">
 											<span class="input-group-addon"><i class="glyphicon glyphicon-filter"></i> Filter</span>
-											<input id="inputFilter" type="text" class="form-control" name="email" placeholder="replacePattern" value=".*">
+											<input id="inputFilter" type="text" class="form-control" name="email" placeholder="Input filter (regEx)" value=".*">
 										</div> <!-- input-group --> 
 									</div> <!-- col --> 
 									<div class="col-sm-4">
@@ -192,8 +192,8 @@ $$$ and again
 						<div class="form-group">
 							<textarea class="form-control" rows="10" id="configEditorText"></textarea>
 						</div> 					
-						<button class="btn btn-primary" onclick="copy_to_clipboard('configEditorText');"><span class="glyphicon glyphicon-copy"></span> Copy Config to Clipboard</button>
-						<button class="btn btn-warning pull-right" onclick="loadConfig()"><span class="glyphicon glyphicon-save"></span> Update and overwrite config fields</button>
+						<button class="btn btn-primary" onclick="copy_to_clipboard('configEditorText');"><span class="glyphicon glyphicon-copy"></span> Copy to Clipboard</button>
+						<button class="btn btn-warning pull-right" onclick="loadConfig()"><span class="glyphicon glyphicon-save"></span> Apply config</button>
 					</div>
 					<div class="modal-footer">
 						<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -206,7 +206,7 @@ $$$ and again
 	<script type='text/javascript'>
 		function clearFields() {
 			// clear textareas
-			let textareas = ['inputText', 'replaceText', 'replaceMagic', 'outputText', 'headerText', 'separatorText', 'footerText'];
+			let textareas = ['inputText', 'inputFilter', 'replaceText', 'replaceMagic', 'outputText', 'headerText', 'separatorText', 'footerText'];
 			for (let i = 0; i < textareas.length; i++) {
 				document.getElementById(textareas[i]).value = '';
 			}
@@ -249,7 +249,7 @@ $$$ and again
 		}
 
 		function saveConfig() {
-			let textareas = ['inputText', 'replaceText', 'replaceMagic', 'outputText', 'headerText', 'separatorText', 'footerText'];
+			let textareas = ['inputText', 'inputFilter', 'replaceText', 'replaceMagic', 'outputText', 'headerText', 'separatorText', 'footerText'];
 			var config = {};
 
 			for (let i = 0; i < textareas.length; i++) {
@@ -260,12 +260,14 @@ $$$ and again
 		}
 
 		function loadConfig() {
-			let textareas = ['inputText', 'replaceText', 'replaceMagic', 'outputText', 'headerText', 'separatorText', 'footerText'];
+			let textareas = ['inputText', 'inputFilter', 'replaceText', 'replaceMagic', 'outputText', 'headerText', 'separatorText', 'footerText'];
 			var config = JSON.parse(document.getElementById('configEditorText').value);
 
 			for (let i = 0; i < textareas.length; i++) {
 				let textarea = textareas[i];
-				document.getElementById(textarea).value = (config[textarea]) ? config[textarea] : '';
+				if (config[textarea]) {
+					document.getElementById(textarea).value = config[textarea];
+				}
 			}
 
 			document.getElementById('configEditorText').value = JSON.stringify(config, null, "\t");
