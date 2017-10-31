@@ -1,0 +1,10 @@
+{
+	"inputText": "line 1\nline 2\nline 3",
+	"inputFilter": ".*",
+	"replaceText": "replace $$$ as often as you want to ...\n$$$ again\n$$$ and again\n",
+	"replaceMagic": "\\$\\$\\$",
+	"outputText": "",
+	"headerText": "** Header **\n",
+	"separatorText": "-- separator --\n",
+	"footerText": "** Footer **\n"
+}
