@@ -125,34 +125,36 @@ $$$ and again
 					</div> <!-- well -->
 				</div> <!-- tab-pane -->
 				<div id="tabHelp" class="tab-pane fade">
+					<h3>Project info</h3>
+					<p>Visit the <a href="https://github.com/realaxl/textExpander">GitHub home page</a> of this project for more infos and example configurations.</p>
 					<h3>Input</h3>
 					<ul>
-						<li>The content of the <kbd>input</kbd> field will be separated into lines, splitting by <code>\n</code> character.</li>
-						<li>Each line from <kbd>input</kbd> field will be processed individually with the rules below.</li>
+						<li>The content of the <code>input</code> field will be separated into lines, splitting by <code>\n</code> character.</li>
+						<li>Each line from <code>input</code> field will be processed individually with the rules below.</li>
 					</ul>
 					<h3>Filters</h3>
 					<ul>
-						<li>Blank lines in the <kbd>input</kbd> field will be skipped and will not appear in <kbd>output</kbd> field.</li>
-						<li>Lines in the <kbd>input</kbd> field can be filtered against the regEx <kbd>filter</kbd> field.</li>
+						<li>Blank lines in the <code>input</code> field will be skipped and will not appear in <code>output</code> field.</li>
+						<li>Lines in the <code>input</code> field can be filtered against the regEx <code>filter</code> field.</li>
 					</ul>
 					<h3>Template and Token</h3>
 					<ul>
-						<li>The <kbd>template</kbd> field defines the format of the output text.</li>
-						<li>Each occurenace ot the magic <kbd>token</kbd> field in the <kbd>template</kbd> will be replaced.</li>
-						<li>The magic <kbd>token</kbd>, e.g. <code>$$$</code> will be replaced with lines from the input field.</li>
-						<li>Please note the <kbd>token</kbd> must match using Javascript regEx.</li>
+						<li>The <code>template</code> field defines the format of the output text.</li>
+						<li>Each occurenace ot the magic <code>token</code> field in the <code>template</code> will be replaced.</li>
+						<li>The magic <code>token</code>, e.g. <code>$$$</code> will be replaced with lines from the input field.</li>
+						<li>Please note the <code>token</code> must match using Javascript regEx.</li>
 					</ul>
 					<h3>Options</h3>
 					<ul>
-						<li><kbd>Header</kbd>, <kbd>Separator</kbd> and <kbd>Footer</kbd> will be added to the output before, inbetween and after the templates.</li>
+						<li><code>Header</code>, <code>Separator</code> and <code>Footer</code> will be added to the output before, inbetween and after the templates.</li>
 						<ul>
-							<li><kbd>Header</kbd></li>
+							<li><code>Header</code></li>
 							<li>Template</li>
-							<li><kbd>Separator</kbd></li>
+							<li><code>Separator</code></li>
 							<li>Template</li>
-							<li><kbd>Separator</kbd></li>
+							<li><code>Separator</code></li>
 							<li>[...]</li>
-							<li><kbd>Footer</kbd></li>
+							<li><code>Footer</code></li>
 						</ul>
 					</ul>
 				</div> <!-- tab-pane -->
@@ -171,7 +173,7 @@ $$$ and again
 						<h4 class="modal-title">Confirm clearing all fields</h4>
 					</div>
 					<div class="modal-body">
-						<button class="btn btn-danger btn-lg btn-block" onclick="clearFields()">Clear fields</button>
+						<button class="btn btn-danger btn-lg btn-block" onclick="clearFields()">Clear all fields</button>
 					</div>
 					<div class="modal-footer">
 						<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
