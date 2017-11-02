@@ -34,9 +34,7 @@
 						<div class="col-sm-6">
 							<h3>Input</h3>
 							<div class="form-group">
-								<textarea class="form-control" rows="10" id="inputText">line 1
-line 2
-line 3</textarea>
+								<textarea class="form-control" rows="10" id="inputText"></textarea>
 							</div> <!-- form-group -->
 							<div class="form-group">
 								<div class="row">
@@ -52,16 +50,13 @@ line 3</textarea>
 								</div> <!-- row --> 
 							</div> <!-- form-group -->
 							<div class="checkbox active pull-right">
-								<label><input type="checkbox" class="" value="" checked>Skip empty lines</label>
+								<label><input type="checkbox" class="" value="" checked disabled>Skip empty lines</label>
 							</div> <!-- checkbox --> 
 						</div> <!-- col --> 
 						<div class="col-sm-6">
 							<h3>Template</h3>
 							<div class="form-group">
-								<textarea class="form-control" rows="10" id="replaceText">replace $$$ as often as you want to ...
-$$$ again
-$$$ and again
-								</textarea>
+								<textarea class="form-control" rows="10" id="replaceText"></textarea>
 							</div> <!-- form-group --> 
 							<div class="form-group">
 								<div class="row">
@@ -197,7 +192,7 @@ $$$ and again
 							<textarea class="form-control" rows="10" id="configEditorText"></textarea>
 						</div> 					
 						<button class="btn btn-primary" onclick="copy_to_clipboard('configEditorText');"><span class="glyphicon glyphicon-copy"></span> Copy to Clipboard</button>
-						<button class="btn btn-warning pull-right" onclick="loadConfig()"><span class="glyphicon glyphicon-save"></span> Apply config</button>
+						<button class="btn btn-warning pull-right" onclick="loadConfig(JSON.parse(document.getElementById('configEditorText').value))"><span class="glyphicon glyphicon-save"></span> Apply config</button>
 					</div>
 					<div class="modal-footer">
 						<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -263,7 +258,7 @@ $$$ and again
 			document.getElementById('configEditorText').value = JSON.stringify(config, null, "\t");
 		}
 
-		function loadConfig() {
+		function loadConfig(config) {
 			let textareas = ['inputText', 'inputFilter', 'replaceText', 'replaceMagic', 'outputText', 'headerText', 'separatorText', 'footerText'];
 			var config = JSON.parse(document.getElementById('configEditorText').value);
 
@@ -278,3 +273,5 @@ $$$ and again
 		}
 	</script>
 </html>
+
+
