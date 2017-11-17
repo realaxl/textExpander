@@ -89,7 +89,7 @@
 								<div class="col-sm-6">
 									<div class="pull-right">
 										<button class="btn btn-primary" onclick="copy_to_clipboard('outputText');"><span class="glyphicon glyphicon-copy"></span> Clipboard</button>
-										<button class="btn btn-primary" onclick="downloadOutput();"><span class="glyphicon glyphicon-save-file"></span> Download</button>
+										<button class="btn btn-primary" onclick="downloadOutput('outputText');"><span class="glyphicon glyphicon-save-file"></span> Download</button>
 										<button class="btn btn-danger" onclick="document.getElementById('outputText').value='';"><span class="glyphicon glyphicon-remove"></span> Clear</button>
 									</div> <!-- pull-right --> 
 								</div> <!-- col --> 
@@ -211,6 +211,7 @@
 			}
 		}
 		
+
 		function splitAndReplace() {
 			var arrayOfLines = $('#inputText').val().split('\n');
 			var outputText = '';
@@ -236,19 +237,24 @@
 			document.getElementById('outputText').value = outputText;		
 		}
 		
+		// try to copy the content of an input field to browser clipboard
 		function copy_to_clipboard(id) {
 			document.getElementById(id).select();
 			document.execCommand('copy');
 		}
 
-		function downloadOutput() {
-			var s = document.getElementById('outputText').value;
+
+		// try to download the content of an input field with the browser
+		function downloadOutput(id) {
+			var s = document.getElementById(id).value;
 			function dataUrl(data) {return "data:x-application/text," + escape(data);}
 				window.open(dataUrl(s));
 		}
 
+
+		// generate a JSON representation of the current form input fields
 		function saveConfig() {
-			let textareas = ['inputText', 'inputFilter', 'replaceText', 'replaceMagic', 'outputText', 'headerText', 'separatorText', 'footerText'];
+			let textareas = ['inputText', 'inputFilter', 'replaceText', 'replaceMagic', 'headerText', 'separatorText', 'footerText']; // 'outputText',
 			var config = {};
 
 			for (let i = 0; i < textareas.length; i++) {
@@ -258,8 +264,10 @@
 			document.getElementById('configEditorText').value = JSON.stringify(config, null, "\t");
 		}
 
+
+		// load a JSON representation from config input field for the form input fields
 		function loadConfig(config) {
-			let textareas = ['inputText', 'inputFilter', 'replaceText', 'replaceMagic', 'outputText', 'headerText', 'separatorText', 'footerText'];
+			let textareas = ['inputText', 'inputFilter', 'replaceText', 'replaceMagic', 'headerText', 'separatorText', 'footerText']; // 'outputText',
 			var config = JSON.parse(document.getElementById('configEditorText').value);
 
 			for (let i = 0; i < textareas.length; i++) {
@@ -269,7 +277,8 @@
 				}
 			}
 
-			document.getElementById('configEditorText').value = JSON.stringify(config, null, "\t");
+			document.getElementById('configEditorText').value = JSON.stringify(config, null, "\t"); // reload config to reformat JSON
+			document.getElementById('outputText').value=''; // clear ouput to reduce confusion
 		}
 	</script>
 </html>
